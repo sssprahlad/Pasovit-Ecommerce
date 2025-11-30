@@ -1,0 +1,11 @@
+.add-product-filter-container {
+  width: 100%;
+}
+
+.add-product-filter-container select {
+  width: 100%;
+  padding: 0.3rem 1rem;
+  border: none;
+  outline: none;
+  cursor: pointer;
+}
