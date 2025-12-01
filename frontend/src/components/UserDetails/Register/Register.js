@@ -1,14 +1,50 @@
-import React from "react";
+import React, { useState } from "react";
 import { MdOutlineEmail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
+import { REGISTER_API } from "../../../constants/constants";
 
 const Register = () => {
   const navigate = useNavigate();
+  const [userRegisterDetails, setUserRegisterDetails] = useState({
+    userName: "",
+    email: "",
+    password: "",
+  });
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+
+    setUserRegisterDetails({
+      ...userRegisterDetails,
+      [name]: value,
+    });
+  };
+
+  const handleRegisterSubmit = async (e) => {
+    e.preventDefault();
+
+    try {
+      const response = await fetch(REGISTER_API, {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify(userRegisterDetails),
+      });
+
+      const data = await response.json();
+      // localStorage.setItem("token", data?.token);
+      console.log(data, "data");
+      navigate("/login");
+    } catch (err) {
+      console.error(err.message);
+    }
+  };
 
   return (
     <div className="login-container">
-      <form className="form-container">
+      <form className="form-container" onSubmit={handleRegisterSubmit}>
         <div className="org-container">
           <div className="bg-icon">
             <CiLock style={{ color: "#ffffff", fontSize: "1.2rem" }} />
@@ -25,6 +61,8 @@ const Register = () => {
               type="text"
               placeholder="Enter your username"
               name="userName"
+              required
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -37,7 +75,9 @@ const Register = () => {
               id="email"
               type="email"
               placeholder="Enter your email"
-              name="text"
+              name="email"
+              required
+              onChange={handleInputChange}
             />
           </div>
         </div>
@@ -50,6 +90,8 @@ const Register = () => {
               type="password"
               placeholder="Enter your password"
               name="password"
+              required
+              onChange={handleInputChange}
             />
           </div>
         </div>
