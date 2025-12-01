@@ -1,8 +1,10 @@
 export const API_BASE_URL = "http://localhost:8080";
 
+//Login
 export const LOGIN_API = `${API_BASE_URL}/api/user/login`;
 
-export const REGISTER_API = `${API_BASE_URL}/api/register`;
+// Register
+export const REGISTER_API = `${API_BASE_URL}/api/user/register`;
 
 // categories
 export const ALL_CATEGORIES_API = `${API_BASE_URL}/api/all-categories`;
@@ -16,3 +18,10 @@ export const ALL_PRODUCTS_API = `${API_BASE_URL}/api/all-products`;
 export const UPDATE_PRODUCT_API = `${API_BASE_URL}/api/product`;
 export const DELETE_PRODUCT_API = `${API_BASE_URL}/api/product`;
 export const FILTER_CATEGORY_API = `${API_BASE_URL}/api/products/category`;
+
+// cartItems
+
+export const ADD_TO_CART_API = `${API_BASE_URL}/api/add/cart-items`;
+export const GET_ALL_TO_CART_API = `${API_BASE_URL}/api/get/cart-items`;
+export const UPDATE_ADD_TO_CART_API = `${API_BASE_URL}/api/update/cart-items`;
+export const DELETE_ADD_TO_CART_API = `${API_BASE_URL}/api/delete/cartItem`;

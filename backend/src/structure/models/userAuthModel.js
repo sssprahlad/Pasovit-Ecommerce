@@ -1,5 +1,4 @@
 const db = require("../../config/db");
-const { route } = require("../routers/userAuthRouter");
 
 module.exports = {
   findByUser: (email, callback) => {
@@ -13,6 +12,8 @@ module.exports = {
       callback
     );
   },
+
+  createCart: (userId, callback) => {
+    db.run(`INSERT INTO cart (user_id) VALUES(?)`, [userId], callback);
+  },
 };
-
-

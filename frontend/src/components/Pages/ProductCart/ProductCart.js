@@ -3,10 +3,33 @@ import { MdFavoriteBorder } from "react-icons/md";
 import { MdFavorite } from "react-icons/md";
 import { useState } from "react";
 import "./ProductCart.css";
-import { API_BASE_URL } from "../../../constants/constants";
+import { API_BASE_URL, ADD_TO_CART_API } from "../../../constants/constants";
 
 const ProductCart = ({ product }) => {
   const [quantity, setQunatity] = useState(1);
+
+  const handleAddProduct = async (product) => {
+    console.log(product);
+    const cartId = localStorage.getItem("userId");
+    const productId = product.id;
+
+    const response = await fetch(ADD_TO_CART_API, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({
+        cartId: cartId,
+        productId: productId,
+        quantity: quantity,
+      }),
+    });
+
+    const data = await response.json();
+    console.log(data);
+    setQunatity(1);
+  };
+
   return (
     <div className="card-container">
       <div className="image-container">
@@ -27,9 +50,9 @@ const ProductCart = ({ product }) => {
       <div className="buttons-container">
         <button
           className="add-to-cart"
-          //   onClick={() => {
-          //     handleAddProduct(product);
-          //   }}
+          onClick={() => {
+            handleAddProduct(product);
+          }}
         >
           Add to cart
         </button>

@@ -7,6 +7,7 @@ import ProtectedRouter from "./constants/ProtectedRouter";
 import Home from "./components/Pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Admin from "./components/Admin/Admin";
+import Cart from "./components/Pages/Cart/Cart";
 
 function App() {
   return (
@@ -19,6 +20,7 @@ function App() {
           <Route element={<ProtectedRouter />}>
             <Route path="/" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
       </Router>

@@ -79,9 +79,22 @@ exports.login = (req, res) => {
         expiresIn: "1h",
       });
 
+      const userId = existingUser.id;
+      User.createCart(userId, (err) => {
+        if (err)
+          return res
+            .status(500)
+            .json({ status: 500, message: "Data base error" });
+      });
+
       return res
         .status(200)
-        .json({ status: 200, message: "User login Successfully.", token });
+        .json({
+          status: 200,
+          message: "User login Successfully.",
+          token,
+          userId: userId,
+        });
     });
   } catch (err) {
     console.error(err.message);

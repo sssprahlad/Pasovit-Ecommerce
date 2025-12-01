@@ -6,6 +6,7 @@ import {
   ALL_CATEGORIES_API,
   ALL_PRODUCTS_API,
   FILTER_CATEGORY_API,
+  ADD_TO_CART_API,
 } from "../../../constants/constants";
 
 const Home = () => {
