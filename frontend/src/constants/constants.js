@@ -1,7 +1,9 @@
 export const API_BASE_URL = "http://localhost:8080";
 
+//Login
 export const LOGIN_API = `${API_BASE_URL}/api/user/login`;
 
+// Register
 export const REGISTER_API = `${API_BASE_URL}/api/user/register`;
 
 // categories
