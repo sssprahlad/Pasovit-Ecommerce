@@ -102,7 +102,7 @@ const Cart = () => {
                         <img
                           src={`${API_BASE_URL}/uploads/${eachCartItem?.product_image}`}
                           alt="product-logo"
-                          className="product-img"
+                          className="cart-product-img"
                         />
                         <h3 className="cart-product-title">
                           {eachCartItem?.product_name}
