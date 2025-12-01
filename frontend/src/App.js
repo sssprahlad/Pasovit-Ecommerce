@@ -8,6 +8,7 @@ import Home from "./components/Pages/Home/Home";
 import Navbar from "./components/Navbar/Navbar";
 import Admin from "./components/Admin/Admin";
 import Cart from "./components/Pages/Cart/Cart";
+import About from "./components/Pages/About/About";
 
 function App() {
   return (
@@ -20,6 +21,8 @@ function App() {
           <Route element={<ProtectedRouter />}>
             <Route path="/" element={<Home />} />
             <Route path="/admin" element={<Admin />} />
+            <Route path="/cart" element={<Cart />} />
+            <Route path="/about" element={<About />} />
             <Route path="/cart" element={<Cart />} />
           </Route>
         </Routes>
