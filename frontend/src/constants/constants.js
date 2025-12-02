@@ -1,4 +1,4 @@
-export const API_BASE_URL = "http://localhost:8080";
+export const API_BASE_URL = "https://pasovit-ecommerce.onrender.com";
 //"https://pasovit-ecommerce.onrender.com" || "http://localhost:8080"
 //Login
 export const LOGIN_API = `${API_BASE_URL}/api/user/login`;
