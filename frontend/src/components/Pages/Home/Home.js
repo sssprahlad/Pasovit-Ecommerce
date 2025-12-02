@@ -24,6 +24,7 @@ const Home = () => {
     message: "",
     severity: "success",
   });
+  const [loading, setLoading] = useState(false);
 
   const fetchCategories = async () => {
     const response = await fetch(ALL_CATEGORIES_API, {
@@ -35,6 +36,7 @@ const Home = () => {
   };
 
   const fetchProducts = async () => {
+    setLoading(true);
     const response = await fetch(
       `${ALL_PRODUCTS_API}?page=${page}&limit=10&search=${searchQuery}`,
       {
@@ -44,6 +46,7 @@ const Home = () => {
 
     const data = await response.json();
     setProductsList(data?.products);
+    setLoading(false);
   };
 
   useEffect(() => {
@@ -52,6 +55,7 @@ const Home = () => {
   }, [page, searchQuery]);
 
   const handleFilterCategory = async (id) => {
+    setLoading(true);
     setActiveFilter(id);
     const response = await fetch(
       `${FILTER_CATEGORY_API}/${id}?page=${page}&limit=10`,
@@ -62,6 +66,7 @@ const Home = () => {
 
     const data = await response.json();
     setProductsList(data?.products);
+    setLoading(false);
   };
 
   return (
@@ -99,10 +104,30 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div className="products-parts">
-          {productsList?.map((eachProduct) => (
-            <ProductCart product={eachProduct} setSnackbar={setSnackbar} />
-          ))}
+        <div>
+          {" "}
+          {productsList?.length > 0 ? (
+            <div className="products-parts">
+              {productsList?.map((eachProduct) => (
+                <ProductCart product={eachProduct} setSnackbar={setSnackbar} />
+              ))}
+            </div>
+          ) : (
+            <div
+              style={{
+                display: "flex",
+                justifyContent: "center",
+                // flexDirection: "column",
+                alignItems: "center",
+                width: "100%",
+                // height: "100%",
+                fontWeight: "bold",
+                gap: "2rem",
+              }}
+            >
+              No Products Found.
+            </div>
+          )}
         </div>
       </div>
       <div className="pagination-container">

@@ -9,6 +9,9 @@ const Navbar = () => {
   const [userPopup, setUserPopup] = useState(false);
 
   const handleLogout = () => {
+    if (!window.confirm("Are you confirm to logout")) {
+      return;
+    }
     localStorage.removeItem("token");
     navigate("/login");
   };

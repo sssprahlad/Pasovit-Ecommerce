@@ -59,98 +59,124 @@ const MyOrders = () => {
     <div className="main-common-container">
       <Navbar />
       <div className="main-sub-cont">
-        <div className="my-cart-container">
-          <div className="remove-btn-container">
-            <h2>My Orders</h2>
-            {/* <button className="remove-all-btn">Remove All</button> */}
-          </div>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>S.No</th>
-                  <th>Items</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Remove</th>
-                  <th>Delivery Date</th>
-                </tr>
-              </thead>
-              <tbody>
-                {orderItemsList?.orderItems?.map((eachCartItem, index) => {
-                  const dates = [
-                    { date: "Your order will be delivered in 2 days" },
-                    {
-                      date: "Your order has been packed and is ready for shipping",
-                    },
-                    { date: "Your order is out for delivery" },
-                    {
-                      date: "Your order has been dispatched from the warehouse",
-                    },
-                    { date: "Your order will arrive tomorrow" },
-                    { date: "Your order is being processed" },
-                    { date: "Your order is delayed due to high demand" },
-                    { date: "Your order will reach you by this weekend" },
-                    { date: "Your order is currently in transit" },
-                    { date: "Your order has been successfully delivered" },
-                  ];
+        {orderItemsList?.orderItems?.length > 0 ? (
+          <div className="my-cart-container">
+            <div className="remove-btn-container">
+              <h2>My Orders</h2>
+              {/* <button className="remove-all-btn">Remove All</button> */}
+            </div>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Items</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Delivery Date</th>
+                    <th>Remove</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {orderItemsList?.orderItems?.map((eachCartItem, index) => {
+                    const dates = [
+                      { date: "Your order will be delivered in 2 days" },
+                      {
+                        date: "Your order has been packed and is ready for shipping",
+                      },
+                      { date: "Your order is out for delivery" },
+                      {
+                        date: "Your order has been dispatched from the warehouse",
+                      },
+                      { date: "Your order will arrive tomorrow" },
+                      { date: "Your order is being processed" },
+                      { date: "Your order is delayed due to high demand" },
+                      { date: "Your order will reach you by this weekend" },
+                      { date: "Your order is currently in transit" },
+                      { date: "Your order has been successfully delivered" },
+                    ];
 
-                  const randomDate =
-                    dates[Math.floor(Math.random() * dates.length)];
+                    const randomDate =
+                      dates[Math.floor(Math.random() * dates.length)];
 
-                  return (
-                    <tr key={index}>
-                      <td>{index + 1}</td>
-                      <td>
-                        <div className="product-img-cont">
-                          <img
-                            src={`${API_BASE_URL}/uploads/${eachCartItem?.product_image}`}
-                            alt="product-logo"
-                            className="cart-product-img"
-                          />
-                          <h3 className="cart-product-title">
-                            {eachCartItem?.product_name}
-                          </h3>
-                        </div>
-                      </td>
-                      <td>
-                        <div className="product-img-cont">
-                          <p>{eachCartItem?.quantity}</p>
-                        </div>
-                      </td>
+                    return (
+                      <tr key={index}>
+                        <td>{index + 1}</td>
+                        <td>
+                          <div className="product-img-cont">
+                            <img
+                              src={`${API_BASE_URL}/uploads/${eachCartItem?.product_image}`}
+                              alt="product-logo"
+                              className="cart-product-img"
+                            />
+                            <h3 className="cart-product-title">
+                              {eachCartItem?.product_name}
+                            </h3>
+                          </div>
+                        </td>
+                        <td>
+                          <div className="product-img-cont">
+                            <p>{eachCartItem?.quantity}</p>
+                          </div>
+                        </td>
 
-                      <td>{eachCartItem.price}/-</td>
-                      <td>
-                        <button
-                          className="cancel-btn"
-                          onClick={() =>
-                            handleDeleteOrderItem(eachCartItem?.orderItemId)
-                          }
-                        >
-                          <MdOutlineCancel />
-                        </button>
-                      </td>
-                      <td>
-                        <p className="order-date"> {randomDate?.date}</p>
-                      </td>
-                    </tr>
-                  );
-                })}
-              </tbody>
-            </table>
-          </div>
-          <div className="total-container">
-            <h2>Total Order Amount</h2>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-            >
-              <h3>{orderItemsList?.total}.00/-</h3>
-              {/* <button className="order-btn" onClick={handlePlaceOrder}>
+                        <td>{eachCartItem.price}/-</td>
+                        <td>
+                          <p className="order-date"> {randomDate?.date}</p>
+                        </td>
+                        <td>
+                          <button
+                            className="cancel-btn"
+                            onClick={() =>
+                              handleDeleteOrderItem(eachCartItem?.orderItemId)
+                            }
+                          >
+                            <MdOutlineCancel />
+                          </button>
+                        </td>
+                      </tr>
+                    );
+                  })}
+                </tbody>
+              </table>
+            </div>
+            <div className="total-container">
+              <h2>Total Order Amount</h2>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <h3>{orderItemsList?.total}.00/-</h3>
+                {/* <button className="order-btn" onClick={handlePlaceOrder}>
                 place order
               </button> */}
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              fontWeight: "bold",
+              gap: "2rem",
+            }}
+          >
+            <h1>Your Orders is empty</h1>
+            <img
+              src="https://cdni.iconscout.com/illustration/premium/thumb/girl-holding-empty-shopping-cart-illustration-svg-download-png-10018095.png"
+              height={250}
+              width={400}
+              alt="cart-logo"
+            />
+          </div>
+        )}
       </div>
       <SnackbarPopup
         open={snackbar.open}

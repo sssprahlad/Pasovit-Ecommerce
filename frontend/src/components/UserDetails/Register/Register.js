@@ -3,6 +3,7 @@ import { MdOutlineEmail } from "react-icons/md";
 import { CiLock } from "react-icons/ci";
 import { useNavigate } from "react-router-dom";
 import { REGISTER_API } from "../../../constants/constants";
+import SnackbarPopup from "../../../constants/Snackbar";
 
 const Register = () => {
   const navigate = useNavigate();
@@ -10,6 +11,12 @@ const Register = () => {
     userName: "",
     email: "",
     password: "",
+  });
+
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
   });
 
   const handleInputChange = (e) => {
@@ -36,7 +43,20 @@ const Register = () => {
       const data = await response.json();
       // localStorage.setItem("token", data?.token);
       console.log(data, "data");
-      navigate("/login");
+      if (data.status === 200) {
+        setSnackbar({
+          open: true,
+          message: data.message,
+          severity: "success",
+        });
+        navigate("/login");
+      } else {
+        setSnackbar({
+          open: true,
+          message: data.message,
+          severity: "error",
+        });
+      }
     } catch (err) {
       console.error(err.message);
     }
@@ -106,6 +126,13 @@ const Register = () => {
           </span>
         </div>
       </form>
+      <SnackbarPopup
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        setSnackbar={setSnackbar}
+        onClose={() => setSnackbar({ open: false })}
+      />
     </div>
   );
 };

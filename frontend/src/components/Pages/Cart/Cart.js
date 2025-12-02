@@ -110,99 +110,125 @@ const Cart = () => {
     <div className="main-common-container">
       <Navbar />
       <div className="main-sub-cont">
-        <div className="my-cart-container">
-          <div className="remove-btn-container">
-            <h2>My Cart</h2>
-            <button className="remove-all-btn">Remove All</button>
-          </div>
-          <div className="table-container">
-            <table>
-              <thead>
-                <tr>
-                  <th>S.No</th>
-                  <th>Items</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Remove</th>
-                </tr>
-              </thead>
-              <tbody>
-                {cartItemsList?.cartItems?.map((eachCartItem, index) => (
-                  <tr key={index}>
-                    <td>{index + 1}</td>
-                    <td>
-                      <div className="product-img-cont">
-                        <img
-                          src={`${API_BASE_URL}/uploads/${eachCartItem?.product_image}`}
-                          alt="product-logo"
-                          className="cart-product-img"
-                        />
-                        <h3 className="cart-product-title">
-                          {eachCartItem?.product_name}
-                        </h3>
-                      </div>
-                    </td>
-                    <td>
-                      <div className="product-img-cont">
-                        <button
-                          type="button"
-                          className="cart-quantity-btn"
-                          // disabled={eachCartItem?.quantity === 1}
-                          onClick={() => {
-                            handleDecreseQuantity(
-                              eachCartItem?.cartItemId,
-                              eachCartItem?.productId,
-                              eachCartItem?.quantity
-                            );
-                          }}
-                        >
-                          -
-                        </button>
-                        <p>{eachCartItem?.quantity}</p>
-                        <button
-                          type="button"
-                          className="cart-quantity-btn"
-                          onClick={() => {
-                            handleIncreaseQuantity(
-                              eachCartItem?.cartItemId,
-                              eachCartItem.productId,
-                              eachCartItem?.quantity
-                            );
-                          }}
-                        >
-                          +
-                        </button>
-                      </div>
-                    </td>
-
-                    <td>{eachCartItem.price}/-</td>
-                    <td>
-                      <button
-                        className="cancel-btn"
-                        onClick={() =>
-                          handleDeleteCartItem(eachCartItem?.cartItemId)
-                        }
-                      >
-                        <MdOutlineCancel />
-                      </button>
-                    </td>
+        {cartItemsList?.cartItems?.length > 0 ? (
+          <div className="my-cart-container">
+            <div className="remove-btn-container">
+              <h2>My Cart</h2>
+              <button className="remove-all-btn">Remove All</button>
+            </div>
+            <div className="table-container">
+              <table>
+                <thead>
+                  <tr>
+                    <th>S.No</th>
+                    <th>Items</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Remove</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-          <div className="total-container">
-            <h2>Total</h2>
-            <div
-              style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
-            >
-              <h3>{cartItemsList?.total}.00/-</h3>
-              <button className="order-btn" onClick={handlePlaceOrder}>
-                place order
-              </button>
+                </thead>
+                <tbody>
+                  {cartItemsList?.cartItems?.map((eachCartItem, index) => (
+                    <tr key={index}>
+                      <td>{index + 1}</td>
+                      <td>
+                        <div className="product-img-cont">
+                          <img
+                            src={`${API_BASE_URL}/uploads/${eachCartItem?.product_image}`}
+                            alt="product-logo"
+                            className="cart-product-img"
+                          />
+                          <h3 className="cart-product-title">
+                            {eachCartItem?.product_name}
+                          </h3>
+                        </div>
+                      </td>
+                      <td>
+                        <div className="product-img-cont">
+                          <button
+                            type="button"
+                            className="cart-quantity-btn"
+                            disabled={eachCartItem?.quantity === 1}
+                            onClick={() => {
+                              handleDecreseQuantity(
+                                eachCartItem?.cartItemId,
+                                eachCartItem?.productId,
+                                eachCartItem?.quantity
+                              );
+                            }}
+                          >
+                            -
+                          </button>
+                          <p>{eachCartItem?.quantity}</p>
+                          <button
+                            type="button"
+                            className="cart-quantity-btn"
+                            onClick={() => {
+                              handleIncreaseQuantity(
+                                eachCartItem?.cartItemId,
+                                eachCartItem.productId,
+                                eachCartItem?.quantity
+                              );
+                            }}
+                          >
+                            +
+                          </button>
+                        </div>
+                      </td>
+
+                      <td>{eachCartItem.price}/-</td>
+                      <td>
+                        <button
+                          className="cancel-btn"
+                          onClick={() =>
+                            handleDeleteCartItem(eachCartItem?.cartItemId)
+                          }
+                        >
+                          <MdOutlineCancel />
+                        </button>
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+            <div className="total-container">
+              <h2>Total</h2>
+              <div
+                style={{
+                  display: "flex",
+                  flexDirection: "column",
+                  gap: "1rem",
+                }}
+              >
+                <h3>{cartItemsList?.total}.00/-</h3>
+                <button className="order-btn" onClick={handlePlaceOrder}>
+                  place order
+                </button>
+              </div>
             </div>
           </div>
-        </div>
+        ) : (
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "center",
+              flexDirection: "column",
+              alignItems: "center",
+              width: "100%",
+              fontWeight: "bold",
+              gap: "2rem",
+            }}
+          >
+            <h1>Your Cart is empty</h1>
+            <img
+              src="https://www.vinsolutions.com/wp-content/uploads/sites/2/vinsolutions/media/Vin-Images/news-blog/Empty_Shopping_Cart_blog.jpg"
+              height={250}
+              width={400}
+              alt="cart-logo"
+            />
+          </div>
+        )}
       </div>
       <SnackbarPopup
         open={snackbar.open}
