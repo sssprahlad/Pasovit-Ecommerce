@@ -104,8 +104,7 @@ const Home = () => {
             ))}
           </div>
         </div>
-        <div>
-          {" "}
+        <div style={{ width: "100%" }}>
           {productsList?.length > 0 ? (
             <div className="products-parts">
               {productsList?.map((eachProduct) => (

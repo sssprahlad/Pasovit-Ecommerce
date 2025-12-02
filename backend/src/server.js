@@ -13,10 +13,8 @@ const app = express();
 
 //app.use(cors());
 
-const allowedOrigins = [
-  "https://pasovit-ecommerce-ten.vercel.app",
-  "http://localhost:3000",
-];
+const allowedOrigins = ["http://localhost:3000"];
+// "https://pasovit-ecommerce-ten.vercel.app",
 
 const corsOptions = {
   origin: function (origin, callback) {
