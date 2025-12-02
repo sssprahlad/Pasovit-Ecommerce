@@ -1,5 +1,4 @@
-export const API_BASE_URL =
-  "https://pasovit-ecommerce.onrender.com" || "http://localhost:8080";
+export const API_BASE_URL = "http://localhost:8080";
 //"https://pasovit-ecommerce.onrender.com"
 //Login
 export const LOGIN_API = `${API_BASE_URL}/api/user/login`;
@@ -26,3 +25,9 @@ export const ADD_TO_CART_API = `${API_BASE_URL}/api/add/cart-items`;
 export const GET_ALL_TO_CART_API = `${API_BASE_URL}/api/get/cart-items`;
 export const UPDATE_ADD_TO_CART_API = `${API_BASE_URL}/api/update/cart-items`;
 export const DELETE_ADD_TO_CART_API = `${API_BASE_URL}/api/delete/cartItem`;
+
+// orders
+
+export const ADD_ORDER_ITEM_API = `${API_BASE_URL}/api/add/order-item`;
+export const GET_ALL_ORDER_ITEMS_API = `${API_BASE_URL}/api/get/order-items`;
+export const DELETE_ORDER_ITEM_API = `${API_BASE_URL}/api/delete/order-item`;

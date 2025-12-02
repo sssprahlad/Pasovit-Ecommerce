@@ -8,11 +8,22 @@ import {
   FILTER_CATEGORY_API,
   ADD_TO_CART_API,
 } from "../../../constants/constants";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa";
+import { IoSearchOutline } from "react-icons/io5";
+import SnackbarPopup from "../../../constants/Snackbar";
 
 const Home = () => {
   const [categoriesList, setCategoriesList] = useState();
   const [productsList, setProductsList] = useState();
   const [activeFilter, setActiveFilter] = useState();
+  const [page, setPage] = useState(1);
+  const [searchQuery, setSearchQuery] = useState("");
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const fetchCategories = async () => {
     const response = await fetch(ALL_CATEGORIES_API, {
@@ -24,9 +35,12 @@ const Home = () => {
   };
 
   const fetchProducts = async () => {
-    const response = await fetch(ALL_PRODUCTS_API, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${ALL_PRODUCTS_API}?page=${page}&limit=10&search=${searchQuery}`,
+      {
+        method: "GET",
+      }
+    );
 
     const data = await response.json();
     setProductsList(data?.products);
@@ -35,13 +49,16 @@ const Home = () => {
   useEffect(() => {
     fetchCategories();
     fetchProducts();
-  }, []);
+  }, [page, searchQuery]);
 
   const handleFilterCategory = async (id) => {
     setActiveFilter(id);
-    const response = await fetch(`${FILTER_CATEGORY_API}/${id}`, {
-      method: "GET",
-    });
+    const response = await fetch(
+      `${FILTER_CATEGORY_API}/${id}?page=${page}&limit=10`,
+      {
+        method: "GET",
+      }
+    );
 
     const data = await response.json();
     setProductsList(data?.products);
@@ -53,7 +70,21 @@ const Home = () => {
       <div className="main-sub-cont">
         <div className="filter-part">
           <h3>Filters</h3>
+
           <div className="filter-container-details">
+            <div className="form-group">
+              <label htmlFor="email">Search</label>
+              <div className="input-field-container">
+                <IoSearchOutline style={{ height: "20px", width: "20px" }} />
+                <input
+                  type="search"
+                  placeholder="Search product"
+                  name="search"
+                  required
+                  onChange={(e) => setSearchQuery(e.target.value)}
+                />
+              </div>
+            </div>
             {categoriesList?.map((eachCategory) => (
               <div className="each-filter">
                 <h5
@@ -70,10 +101,26 @@ const Home = () => {
         </div>
         <div className="products-parts">
           {productsList?.map((eachProduct) => (
-            <ProductCart product={eachProduct} />
+            <ProductCart product={eachProduct} setSnackbar={setSnackbar} />
           ))}
         </div>
       </div>
+      <div className="pagination-container">
+        <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+          <FaAngleLeft />
+        </button>
+        {page}
+        <button onClick={() => setPage(page + 1)}>
+          <FaAngleRight />{" "}
+        </button>
+      </div>
+      <SnackbarPopup
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        setSnackbar={setSnackbar}
+        onClose={() => setSnackbar({ open: false })}
+      />
     </div>
   );
 };

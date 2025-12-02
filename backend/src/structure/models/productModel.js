@@ -1,4 +1,5 @@
 const db = require("../../config/db");
+const { off } = require("../../server");
 
 module.exports = {
   addProduct: (
@@ -26,8 +27,13 @@ module.exports = {
     );
   },
 
-  getAllProducts: (callback) => {
-    db.all(`SELECT * FROM products`, callback);
+  getAllProducts: (limit, offset, search, callback) => {
+    const searchTerm = `%${search}%`;
+    db.all(
+      `SELECT * FROM products WHERE product_name LIKE ? OR description LIKE ? LIMIT ? OFFSET ?`,
+      [searchTerm, searchTerm, limit, offset],
+      callback
+    );
   },
 
   deleteProduct: (productId, callback) => {
@@ -65,10 +71,10 @@ module.exports = {
     );
   },
 
-  categoryFilters: (categoryId, callback) => {
+  categoryFilters: (categoryId, limit, offset, callback) => {
     db.all(
-      `SELECT * FROM products WHERE category_id = ?`,
-      [categoryId],
+      `SELECT * FROM products WHERE category_id = ? LIMIT ? OFFSET ?`,
+      [categoryId, limit, offset],
       callback
     );
   },

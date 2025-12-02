@@ -45,6 +45,7 @@
   margin-top: 2rem;
   overflow-x: auto;
   width: 100%;
+  background: white !important;
 }
 
 .product-img-cont {
@@ -85,4 +86,5 @@
   color: white;
   font-weight: bold;
   border-radius: 8px;
+  cursor: pointer;
 }

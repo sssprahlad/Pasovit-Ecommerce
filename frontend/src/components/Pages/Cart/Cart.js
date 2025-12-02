@@ -7,10 +7,17 @@ import {
   GET_ALL_TO_CART_API,
   API_BASE_URL,
   DELETE_ADD_TO_CART_API,
+  ADD_ORDER_ITEM_API,
 } from "../../../constants/constants";
+import SnackbarPopup from "../../../constants/Snackbar";
 
 const Cart = () => {
   const [cartItemsList, setCartItemsList] = useState();
+  const [snackbar, setSnackbar] = useState({
+    open: false,
+    message: "",
+    severity: "success",
+  });
 
   const getCartItems = async () => {
     const userId = localStorage.getItem("userId");
@@ -71,6 +78,32 @@ const Cart = () => {
     });
     const data = await response.json();
     getCartItems();
+    if (data.status === 200) {
+      setSnackbar({
+        open: true,
+        message: data.message,
+        severity: "error",
+      });
+    }
+  };
+
+  const handlePlaceOrder = async () => {
+    if (!window.confirm("Are you sure confirm your orders")) {
+      return;
+    }
+
+    const userId = localStorage.getItem("userId");
+    console.log(userId, "userid");
+
+    const response = await fetch(`${ADD_ORDER_ITEM_API}/${userId}`, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
+
+    const data = await response.json();
+    console.log(data, "order placed.");
   };
 
   return (
@@ -114,6 +147,7 @@ const Cart = () => {
                         <button
                           type="button"
                           className="cart-quantity-btn"
+                          // disabled={eachCartItem?.quantity === 1}
                           onClick={() => {
                             handleDecreseQuantity(
                               eachCartItem?.cartItemId,
@@ -162,12 +196,21 @@ const Cart = () => {
             <div
               style={{ display: "flex", flexDirection: "column", gap: "1rem" }}
             >
-              <h3>{cartItemsList?.total}/-</h3>
-              <button className="order-btn">place order</button>
+              <h3>{cartItemsList?.total}.00/-</h3>
+              <button className="order-btn" onClick={handlePlaceOrder}>
+                place order
+              </button>
             </div>
           </div>
         </div>
       </div>
+      <SnackbarPopup
+        open={snackbar.open}
+        message={snackbar.message}
+        severity={snackbar.severity}
+        setSnackbar={setSnackbar}
+        onClose={() => setSnackbar({ open: false })}
+      />
     </div>
   );
 };

@@ -87,14 +87,13 @@ exports.login = (req, res) => {
             .json({ status: 500, message: "Data base error" });
       });
 
-      return res
-        .status(200)
-        .json({
-          status: 200,
-          message: "User login Successfully.",
-          token,
-          userId: userId,
-        });
+      return res.status(200).json({
+        status: 200,
+        message: "User login Successfully.",
+        token,
+        userId: userId,
+        userName: existingUser.user_name,
+      });
     });
   } catch (err) {
     console.error(err.message);

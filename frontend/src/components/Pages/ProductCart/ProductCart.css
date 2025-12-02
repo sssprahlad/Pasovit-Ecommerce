@@ -10,6 +10,7 @@
   color: oklch(0.872 0.01 258.338) !important;
   transition: transform 0.3s;
   height: 420px;
+  min-width: 250px;
 }
 
 .card-container:hover {
@@ -55,6 +56,7 @@
   color: #fff;
   font-weight: 600;
   border-radius: 8px;
+  cursor: pointer;
 }
 .fav-button {
   padding: 0.5rem;

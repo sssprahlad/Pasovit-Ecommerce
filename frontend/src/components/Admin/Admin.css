@@ -26,6 +26,7 @@
   margin-top: 2rem;
   overflow-x: auto;
   width: 100%;
+  background: white;
 }
 
 table {
@@ -151,4 +152,5 @@ tr:hover {
 .column-direction {
   display: flex;
   flex-direction: column;
+  padding: 1rem 2rem;
 }

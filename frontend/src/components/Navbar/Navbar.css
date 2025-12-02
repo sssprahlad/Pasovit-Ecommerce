@@ -78,6 +78,19 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+  position: relative;
+}
+.user-details-container {
+  display: flex;
+  flex-direction: column;
+  position: absolute;
+  padding: 0.875rem;
+  background: #ffffff;
+  gap: 0.5rem;
+  border-radius: 8px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  margin-top: 1rem;
+  margin-left: -1rem;
 }
 
 .logout-btn {
@@ -99,4 +112,10 @@
 }
 .active:hover {
   color: #fff;
+}
+.my-order-btn {
+  border: none;
+  outline: none;
+  cursor: pointer;
+  background: transparent;
 }

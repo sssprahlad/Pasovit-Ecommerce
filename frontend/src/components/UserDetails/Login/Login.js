@@ -31,10 +31,13 @@ const Login = () => {
       });
 
       const data = await response.json();
-      localStorage.setItem("token", data?.token);
-      localStorage.setItem("userId", data?.userId);
-      console.log(data, "data");
-      navigate("/");
+      if (data.status === 200) {
+        localStorage.setItem("token", data?.token);
+        localStorage.setItem("userId", data?.userId);
+        localStorage.setItem("userName", data.userName);
+        console.log(data, "data");
+        navigate("/");
+      }
     } catch (err) {
       console.error(err.message);
     }

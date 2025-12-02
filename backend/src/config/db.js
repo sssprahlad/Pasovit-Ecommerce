@@ -48,6 +48,22 @@ db.run(`CREATE TABLE IF NOT EXISTS cartItems(
 
   )`);
 
+db.run(`CREATE TABLE IF NOT EXISTS orders(
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
+    user_id INTEGER NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
+    )`);
+
+db.run(`CREATE TABLE IF NOT EXISTS orderItems(
+  id INTEGER PRIMARY KEY AUTOINCREMENT,
+  order_id INTEGER NOT NULL,
+  product_id INTEGER NOT NULL,
+  quantity INTEGER NOT NULL,
+  FOREIGN KEY (order_id) REFERENCES orders(id) ON DELETE CASCADE,
+  FOREIGN KEY (product_id) REFERENCES products(id) ON DELETE CASCADE
+
+  )`);
+
 db.serialize(() => {
   db.run("PRAGMA foreign_keys = ON");
 });

@@ -4,9 +4,15 @@ import { MdFavorite } from "react-icons/md";
 import { useState } from "react";
 import "./ProductCart.css";
 import { API_BASE_URL, ADD_TO_CART_API } from "../../../constants/constants";
+import SnackbarPopup from "../../../constants/Snackbar";
 
-const ProductCart = ({ product }) => {
+const ProductCart = ({ product, setSnackbar }) => {
   const [quantity, setQunatity] = useState(1);
+  //   const [snackbar, setSnackbar] = useState({
+  //     open: false,
+  //     message: "",
+  //     severity: "success",
+  //   });
 
   const handleAddProduct = async (product) => {
     console.log(product);
@@ -28,6 +34,11 @@ const ProductCart = ({ product }) => {
     const data = await response.json();
     console.log(data);
     setQunatity(1);
+    setSnackbar({
+      open: true,
+      message: data.message,
+      severity: "success",
+    });
   };
 
   return (

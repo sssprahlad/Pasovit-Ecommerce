@@ -13,6 +13,8 @@ import {
 } from "../../constants/constants";
 import { CircularProgress } from "@mui/material";
 import Tooltip from "@mui/material/Tooltip";
+import { FaAngleRight } from "react-icons/fa";
+import { FaAngleLeft } from "react-icons/fa";
 
 const Admin = () => {
   const [selectFiler, setSelectFilter] = useState("");
@@ -29,6 +31,7 @@ const Admin = () => {
   const [editProductId, setEditProductId] = useState();
   const [productsTableStatus, setProductsTableStatus] = useState(false);
   const [editingProductDetails, setEditingProductDetails] = useState();
+  const [page, setPage] = useState(1);
 
   const handleFilterChange = (e) => {
     setSelectFilter(e.target.value);
@@ -63,6 +66,8 @@ const Admin = () => {
         break;
 
       default:
+        setCategoryTableStatus(false);
+        setProductsTableStatus(false);
         break;
     }
   };
@@ -77,7 +82,7 @@ const Admin = () => {
   };
 
   const fetchProducts = async () => {
-    const response = await fetch(ALL_PRODUCTS_API, {
+    const response = await fetch(`${ALL_PRODUCTS_API}?page=${page}&limit=10`, {
       method: "GET",
     });
 
@@ -88,7 +93,7 @@ const Admin = () => {
   useEffect(() => {
     fetchCategories();
     fetchProducts();
-  }, []);
+  }, [page]);
 
   const handleEditCategory = (category) => {
     setEditCategory(category.id);
@@ -603,6 +608,15 @@ const Admin = () => {
             "No Products"
           </div>
         )}
+        <div className="pagination-container">
+          <button disabled={page === 1} onClick={() => setPage(page - 1)}>
+            <FaAngleLeft />
+          </button>
+          {page}
+          <button onClick={() => setPage(page + 1)}>
+            <FaAngleRight />{" "}
+          </button>
+        </div>
       </div>
     );
   };
@@ -610,7 +624,7 @@ const Admin = () => {
   return (
     <div className="main-common-container">
       <Navbar />
-      <div className="main-sub-cont column-direction">
+      <div className="main-sub-container column-direction">
         <div className="search-dropdown-container">
           <div className="search-container">
             <input type="search" placeholder="Search product..." />

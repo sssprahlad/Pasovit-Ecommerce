@@ -1,14 +1,39 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useLocation, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 
 const Navbar = () => {
   const location = useLocation();
   const navigate = useNavigate();
+  const name = localStorage.getItem("userName");
+  const [userPopup, setUserPopup] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem("token");
     navigate("/login");
+  };
+
+  useEffect(() => {
+    setTimeout(() => {
+      setUserPopup(false);
+    }, 15000);
+  }, [userPopup]);
+
+  const userDetails = () => {
+    return (
+      <div className="user-details-container">
+        <h3>{name}</h3>
+        <button
+          className="my-order-btn"
+          onClick={() => {
+            navigate("/my-orders");
+            setUserPopup(false);
+          }}
+        >
+          My Orders{" "}
+        </button>
+      </div>
+    );
   };
 
   return (
@@ -63,7 +88,12 @@ const Navbar = () => {
           </li>
         </ul>
         <div className="logout-btn-container">
-          <div className="user-btn">S</div>
+          <div>
+            <div className="user-btn" onClick={() => setUserPopup(true)}>
+              {name[0]?.toUpperCase()}
+            </div>
+            {userPopup && userDetails()}
+          </div>
           <button className="logout-btn" onClick={handleLogout}>
             Logout
           </button>

@@ -54,7 +54,14 @@ exports.addProductsDetails = (req, res) => {
 };
 
 exports.getAllProductsDetails = (req, res) => {
-  Products.getAllProducts((err, products) => {
+  let page = parseInt(req.query.page) || 1;
+  let limit = parseInt(req.query.limit) || 10;
+  const search = req.query.search || "";
+  console.log(page, limit);
+
+  let offset = (page - 1) * limit;
+
+  Products.getAllProducts(limit, offset,search, (err, products) => {
     if (err)
       return res.status(500).json({ status: 500, message: "Data base error" });
 
@@ -128,8 +135,14 @@ exports.updateProductDetails = (req, res) => {
 
 exports.categoryFilterDetails = (req, res) => {
   const categoryId = req.params.id;
+  let page = parseInt(req.query.page) || 1;
+  let limit = parseInt(req.query.limit) || 10;
 
-  Products.categoryFilters(categoryId, (err, products) => {
+  console.log(page, limit, "category");
+
+  let offset = (page - 1) * limit;
+
+  Products.categoryFilters(categoryId, limit, offset, (err, products) => {
     if (err)
       return res.status(500).json({ status: 500, message: "Database error" });
 

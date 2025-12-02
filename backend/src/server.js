@@ -7,6 +7,7 @@ const userAuthRouter = require("./structure/routers/userAuthRouter");
 const productRouter = require("./structure/routers/productsRouter");
 const categoryRouter = require("./structure/routers/categoriesRouter");
 const cartRouter = require("./structure/routers/cartRouter");
+const ordersRouter = require("./structure/routers/ordersRouter");
 
 const app = express();
 
@@ -34,7 +35,7 @@ const corsOptions = {
 app.use(cors(corsOptions));
 
 app.use(express.json());
-// app.use(express.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 
 // Routers
 
@@ -42,7 +43,9 @@ app.use("/api", userAuthRouter);
 app.use("/api", productRouter);
 app.use("/api", categoryRouter);
 app.use("/api", cartRouter);
+app.use("/api", ordersRouter);
 app.use("/uploads", express.static(path.join(__dirname, "uploads")));
+//app.use("/uploads", express.static("/uploads"));
 
 app.get("/", (req, res) => {
   res.send("Hello world");
