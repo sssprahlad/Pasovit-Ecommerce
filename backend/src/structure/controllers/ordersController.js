@@ -94,3 +94,14 @@ exports.deleteOrderItemDetails = (req, res) => {
     });
   });
 };
+
+exports.AdminOrdersList = (req, res) => {
+  ordersModel.allOrders((err, rows) => {
+    if (err)
+      return res.status(500).json({ status: 500, message: "data error" });
+
+    return res
+      .status(200)
+      .json({ status: 200, message: "all orders", ordersItems: rows });
+  });
+};

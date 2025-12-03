@@ -56,4 +56,8 @@ module.exports = {
     const query = `SELECT email FROM users WHERE id = ?`;
     db.get(query, [userId], callback);
   },
+
+  allOrders: (callback) => {
+    db.all(`SELECT * FROM orders`, [], callback);
+  },
 };
