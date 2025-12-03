@@ -12,6 +12,7 @@ const Register = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const [snackbar, setSnackbar] = useState({
     open: false,
@@ -30,6 +31,7 @@ const Register = () => {
 
   const handleRegisterSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
 
     try {
       const response = await fetch(REGISTER_API, {
@@ -49,6 +51,7 @@ const Register = () => {
           message: data.message,
           severity: "success",
         });
+        setLoading(false);
         navigate("/login");
       } else {
         setSnackbar({
@@ -56,9 +59,11 @@ const Register = () => {
           message: data.message,
           severity: "error",
         });
+        setLoading(false);
       }
     } catch (err) {
       console.error(err.message);
+      setLoading(false);
     }
   };
 
@@ -117,7 +122,19 @@ const Register = () => {
         </div>
 
         <div className="form-group">
-          <button type="submit">Sign Up</button>
+          <button type="submit">
+            {" "}
+            {loading ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  class="spinner"
+                  style={{ height: "25px", width: "25px" }}
+                ></div>
+              </div>
+            ) : (
+              "Sign Up"
+            )}{" "}
+          </button>
           <span className="span-text">
             Already have an account?{" "}
             <a className="sign-in" onClick={() => navigate("/login")}>

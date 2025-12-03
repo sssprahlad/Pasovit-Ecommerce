@@ -81,6 +81,9 @@
   background: #fce5cd;
   cursor: pointer;
 }
+.quantity-container p {
+  color: black;
+}
 
 .red {
   color: red !important;

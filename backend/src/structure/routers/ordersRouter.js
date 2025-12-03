@@ -10,4 +10,6 @@ router.delete(
   ordersController.deleteOrderItemDetails
 );
 
+router.get("/admin-all-orders", ordersController.AdminOrdersList);
+
 module.exports = router;

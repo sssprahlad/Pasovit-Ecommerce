@@ -18,6 +18,7 @@ const Login = () => {
     message: "",
     severity: "success",
   });
+  const [loading, setLoading] = useState(false);
 
   const handleInputChange = (e) => {
     const { name, value } = e.target;
@@ -26,6 +27,7 @@ const Login = () => {
 
   const handleLoginSubmit = async (e) => {
     e.preventDefault();
+    setLoading(true);
     console.log(loginDetails, "login");
     try {
       const response = await fetch(LOGIN_API, {
@@ -47,18 +49,22 @@ const Login = () => {
           message: data.message,
           severity: "success",
         });
+
         setTimeout(() => {
           navigate("/");
         }, 1000);
+        setLoading(false);
       } else {
         setSnackbar({
           open: true,
           message: data.message,
           severity: "error",
         });
+        setLoading(false);
       }
     } catch (err) {
       console.error(err.message);
+      setLoading(false);
     }
   };
 
@@ -101,7 +107,19 @@ const Login = () => {
         </div>
 
         <div className="form-group">
-          <button type="submit">Sign In</button>
+          <button type="submit">
+            {" "}
+            {loading ? (
+              <div style={{ display: "flex", justifyContent: "center" }}>
+                <div
+                  class="spinner"
+                  style={{ height: "25px", width: "25px" }}
+                ></div>
+              </div>
+            ) : (
+              "Sign In"
+            )}{" "}
+          </button>
           <span className="span-text">
             Don't have an account?{" "}
             <a className="sign-in" onClick={() => navigate("/register")}>

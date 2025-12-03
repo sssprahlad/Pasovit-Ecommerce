@@ -6,7 +6,7 @@ export const LOGIN_API = `${API_BASE_URL}/api/user/login`;
 // Register
 export const REGISTER_API = `${API_BASE_URL}/api/user/register`;
 
-// categories
+// categoriess
 export const ALL_CATEGORIES_API = `${API_BASE_URL}/api/all-categories`;
 export const ADD_CATEGORIES_API = `${API_BASE_URL}/api/admin-add-categories`;
 export const UPDATE_CATEGORIES_API = `${API_BASE_URL}/api/category`;
